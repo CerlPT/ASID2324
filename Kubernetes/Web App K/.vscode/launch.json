@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-YesApplication<yes>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.asid.controller.yes.YesApplication",
+            "projectName": "yes",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
