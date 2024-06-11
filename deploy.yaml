@@ -1,0 +1,264 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      hostname: mysql
+      containers:
+        - name: mysql
+          image: mysql:latest
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "12345"
+          ports:
+            - containerPort: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  selector:
+    app: mysql
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      hostname: rabbitmq
+      containers:
+        - name: rabbitmq
+          image: rabbitmq:3.8-management
+          ports:
+            - containerPort: 5672
+            - containerPort: 15672
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+spec:
+  selector:
+    app: rabbitmq
+  ports:
+    - protocol: TCP
+      port: 5672
+      targetPort: 5672
+    - protocol: TCP
+      port: 15672
+      targetPort: 15672
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: population
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: population
+  template:
+    metadata:
+      labels:
+        app: population
+    spec:
+      hostname: population
+      containers:
+        - name: population
+          image: mad.ocir.io/ax6djgjuhrob/consume:latest
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: population
+spec:
+  selector:
+    app: population
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: towns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: towns
+  template:
+    metadata:
+      labels:
+        app: towns
+    spec:
+      hostname: towns
+      containers:
+        - name: towns
+          image: mad.ocir.io/ax6djgjuhrob/towns:latest
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: towns
+spec:
+  selector:
+    app: towns
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: students
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: students
+  template:
+    metadata:
+      labels:
+        app: students
+    spec:
+      hostname: students
+      containers:
+        - name: students
+          image: mad.ocir.io/ax6djgjuhrob/students:latest
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: students
+spec:
+  selector:
+    app: students
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parents
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: parents
+  template:
+    metadata:
+      labels:
+        app: parents
+    spec:
+      hostname: parents
+      containers:
+        - name: parents
+          image: mad.ocir.io/ax6djgjuhrob/parents:latest
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: parents
+spec:
+  selector:
+    app: parents
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clubs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clubs
+  template:
+    metadata:
+      labels:
+        app: clubs
+    spec:
+      hostname: clubs
+      containers:
+        - name: clubs
+          image: mad.ocir.io/ax6djgjuhrob/clubs:latest
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clubs
+spec:
+  selector:
+    app: clubs
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      hostname: webapp
+      containers:
+        - name: webapp
+          image: mad.ocir.io/ax6djgjuhrob/webapp:latest
+          ports:
+            - containerPort: 8090
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp
+spec:
+  selector:
+    app: webapp
+  ports:
+    - protocol: TCP
+      port: 8090
+      targetPort: 8090
+  type: LoadBalancer
